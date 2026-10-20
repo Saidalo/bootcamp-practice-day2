@@ -18,7 +18,7 @@ public class Shelter <T extends Animal>{
     }
 
     public List<T> findBySpecies(String species){
-        return this.animals.stream().filter(animal -> animal.getSpecies().equals(species)).toList();
+        return this.animals.stream().filter(animal -> animal.getSpecies().equalsIgnoreCase(species)).toList();
     }
 
     public List<T> findAvailableAnimals(){
@@ -26,7 +26,12 @@ public class Shelter <T extends Animal>{
     }
 
     public void markAsAdopted(String id){
-        Animal pet = animals.stream().filter(animal -> animal.getId().toString().equals(id)).toList().getFirst();
+        List<T> found = animals.stream().filter(animal -> animal.getId().toString().equals(id)).toList();
+        if (found.isEmpty()) {
+            System.out.println("No animal found with id: " + id);
+            return;
+        }
+        Animal pet = found.get(0);
         pet.markAsAdopted();
         System.out.println("Congratulations " + pet.getName() + " has family now");
     }

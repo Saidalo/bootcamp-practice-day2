@@ -15,51 +15,49 @@ public class ConsoleMenu {
     }
 
     public void start(){
-        printMenu();
         // Show menu in a loop
-        int userInput = scanner.nextInt();
-        // Call correct 'Shelter' methods based on selected option
+        while (true) {
+            printMenu();
+            int userInput = scanner.nextInt();
+            // Call correct 'Shelter' methods based on selected option
 
-        switch (userInput) {
-            case 1:
-                Animal myPet = getAnimalCredentials(scanner);
-                if(myPet == null) {
-                    System.out.println("Something went wrong, please try again");
-                } else {
-                    this.shelter.addAnimal(myPet);
-                    System.out.println("Congratulations: " + myPet.getName() + " is in our shelter now");
-                }
-                this.start();
-                break;
-            case 2:
-                listAllAnimalsInShelter();
-                this.start();
-                break;
-            case 3:
-                System.out.println("What species you would like: Dog, Cat, Bird");
-                scanner.nextLine();
-                String species = scanner.nextLine();
-                printAnimalsBySpecies(species);
-                this.start();
-                break;
-            case 4:
-                List<Animal> animals = shelter.findAvailableAnimals();
-                if (animals.isEmpty()) {
-                    System.out.println("Sorr, all our animals are Adopted");
-                }
-                printAnimals(animals, true);
-                this.start();
-                break;
-            case 5:
-                System.out.print("Your animal id:");
-                scanner.nextLine();
-                String animalID = scanner.nextLine();
-                shelter.markAsAdopted(animalID);
-                this.start();
-                break;
-            case 0:
-            default:
-                return;
+            switch (userInput) {
+                case 1:
+                    Animal myPet = getAnimalCredentials(scanner);
+                    if(myPet == null) {
+                        System.out.println("Something went wrong, please try again");
+                    } else {
+                        this.shelter.addAnimal(myPet);
+                        System.out.println("Congratulations: " + myPet.getName() + " is in our shelter now");
+                    }
+                    break;
+                case 2:
+                    listAllAnimalsInShelter();
+                    break;
+                case 3:
+                    System.out.println("What species you would like: Dog, Cat, Bird");
+                    scanner.nextLine();
+                    String species = scanner.nextLine();
+                    printAnimalsBySpecies(species);
+                    break;
+                case 4:
+                    List<Animal> animals = shelter.findAvailableAnimals();
+                    if (animals.isEmpty()) {
+                        System.out.println("Sorry, all our animals are Adopted");
+                    } else {
+                        printAnimals(animals, true);
+                    }
+                    break;
+                case 5:
+                    System.out.print("Your animal id:");
+                    scanner.nextLine();
+                    String animalID = scanner.nextLine();
+                    shelter.markAsAdopted(animalID);
+                    break;
+                case 0:
+                default:
+                    return;
+            }
         }
     }
 
@@ -78,6 +76,7 @@ public class ConsoleMenu {
         List<Animal> animals = shelter.findBySpecies(species);
         if (animals.isEmpty()) {
             System.out.println("Sorry there is no " + species + "s for now");
+            return;
         }
         System.out.println("All of our " + species +"s:");
         printAnimals(animals, false);
