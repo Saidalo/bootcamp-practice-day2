@@ -1,6 +1,6 @@
 package main.java.org.example.model;
 
-public sealed abstract class Animal permits Dog,Cat,Bird {
+public sealed abstract class Animal permits Dog,Cat,Bird,Rabbit {
     private final AnimalId id;
     private String name;
     private int age;

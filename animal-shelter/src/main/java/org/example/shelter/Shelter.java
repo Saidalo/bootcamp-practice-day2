@@ -4,6 +4,7 @@ import main.java.org.example.model.AdoptionStatus;
 import main.java.org.example.model.Animal;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Shelter <T extends Animal>{
@@ -23,6 +24,14 @@ public class Shelter <T extends Animal>{
 
     public List<T> findAvailableAnimals(){
         return this.animals.stream().filter(animal -> animal.getAdoptionStatus().equals(AdoptionStatus.AVAILABLE)).toList();
+    }
+
+    public List<T> sortByName() {
+        return animals.stream().sorted(Comparator.comparing(Animal::getName)).toList();
+    }
+
+    public List<T> sortByAge() {
+        return animals.stream().sorted(Comparator.comparing(Animal::getAge)).toList();
     }
 
     public void markAsAdopted(String id){
